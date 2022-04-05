@@ -1,21 +1,24 @@
-import React, {createContext, Button} from 'react';
+import React, {createContext, Button, useReducer} from 'react';
 
-const ThemeContext = createContext();
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
 
-const ThemedButton = () => (
-  <ThemeContext.Consumer>
-    {value => (
-      <Button primaryColor={{primaryColor: 'green'}}>
-        I'm button using context!
-      </Button>
-    )}
-  </ThemeContext.Consumer>
-);
+    default:
+      return state;
+  }
+};
 
-const App = props => (
-  <ThemeContext.Provider value={{primaryColor: 'green'}}>
-    {props.children}
-  </ThemeContext.Provider>
-);
+function Increment({initialCount}) {
+  const [state, dispatch] = useReducer(reducer, {count: 0});
+  return (
+    <Button onClick={() => dispatch({type: 'increment'})}>
+      Increment: {state.count}
+    </Button>
+  );
+}
 
-export default App;
+export const App = () => {
+  return <Increment initialCount={5} />;
+};
