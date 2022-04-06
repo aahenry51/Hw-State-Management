@@ -1,5 +1,6 @@
 import React from 'react';
+import {Startup} from './src/screens';
 
-const App: () => Node = () => {};
-
-export default App;
+export default function App = () => {
+  return <Startup />;
+};
